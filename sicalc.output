@@ -1,0 +1,482 @@
+State 16 conflicts: 1 shift/reduce
+State 25 conflicts: 1 shift/reduce
+State 27 conflicts: 1 shift/reduce
+State 28 conflicts: 1 shift/reduce
+State 29 conflicts: 1 shift/reduce
+State 30 conflicts: 1 shift/reduce
+State 31 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: input $end
+
+    1 input: %empty
+    2      | input line
+
+    3 line: NEWLINE
+    4     | expr NEWLINE
+    5     | error NEWLINE
+
+    6 expr: NUM
+    7     | VAR
+    8     | expr PREFIX
+    9     | VAR ASSIGN expr
+   10     | FUN LPAREN expr RPAREN
+   11     | expr PLUS expr
+   12     | expr MINUS expr
+   13     | expr MULT expr
+   14     | expr DIV expr
+   15     | MINUS expr
+   16     | expr EXPON expr
+   17     | LPAREN expr RPAREN
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256) 5
+    NEWLINE (258) 3 4 5
+    LPAREN (259) 10 17
+    RPAREN (260) 10 17
+    NUM <long double> (261) 6
+    VAR <struct symrec*> (262) 7 9
+    FUN <struct symrec*> (263) 10
+    PREFIX <char> (264) 8
+    ASSIGN (265) 9
+    MINUS (266) 12 15
+    PLUS (267) 11
+    MULT (268) 13
+    DIV (269) 14
+    NEG (270)
+    EXPON (271) 16
+
+
+Nonterminals, with rules where they appear
+
+    $accept (17)
+        on left: 0
+    expr <long double> (18)
+        on left: 6 7 8 9 10 11 12 13 14 15 16 17
+        on right: 4 8 9 10 11 12 13 14 15 16 17
+    input (19)
+        on left: 1 2
+        on right: 0 2
+    line (20)
+        on left: 3 4 5
+        on right: 2
+
+
+State 0
+
+    0 $accept: . input $end
+
+    $default  reduce using rule 1 (input)
+
+    input  go to state 1
+
+
+State 1
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end     shift, and go to state 2
+    error    shift, and go to state 3
+    NEWLINE  shift, and go to state 4
+    LPAREN   shift, and go to state 5
+    NUM      shift, and go to state 6
+    VAR      shift, and go to state 7
+    FUN      shift, and go to state 8
+    MINUS    shift, and go to state 9
+
+    expr  go to state 10
+    line  go to state 11
+
+
+State 2
+
+    0 $accept: input $end .
+
+    $default  accept
+
+
+State 3
+
+    5 line: error . NEWLINE
+
+    NEWLINE  shift, and go to state 12
+
+
+State 4
+
+    3 line: NEWLINE .
+
+    $default  reduce using rule 3 (line)
+
+
+State 5
+
+   17 expr: LPAREN . expr RPAREN
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 13
+
+
+State 6
+
+    6 expr: NUM .
+
+    $default  reduce using rule 6 (expr)
+
+
+State 7
+
+    7 expr: VAR .
+    9     | VAR . ASSIGN expr
+
+    ASSIGN  shift, and go to state 14
+
+    $default  reduce using rule 7 (expr)
+
+
+State 8
+
+   10 expr: FUN . LPAREN expr RPAREN
+
+    LPAREN  shift, and go to state 15
+
+
+State 9
+
+   15 expr: MINUS . expr
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 16
+
+
+State 10
+
+    4 line: expr . NEWLINE
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+
+    NEWLINE  shift, and go to state 17
+    PREFIX   shift, and go to state 18
+    MINUS    shift, and go to state 19
+    PLUS     shift, and go to state 20
+    MULT     shift, and go to state 21
+    DIV      shift, and go to state 22
+    EXPON    shift, and go to state 23
+
+
+State 11
+
+    2 input: input line .
+
+    $default  reduce using rule 2 (input)
+
+
+State 12
+
+    5 line: error NEWLINE .
+
+    $default  reduce using rule 5 (line)
+
+
+State 13
+
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+   17     | LPAREN expr . RPAREN
+
+    RPAREN  shift, and go to state 24
+    PREFIX  shift, and go to state 18
+    MINUS   shift, and go to state 19
+    PLUS    shift, and go to state 20
+    MULT    shift, and go to state 21
+    DIV     shift, and go to state 22
+    EXPON   shift, and go to state 23
+
+
+State 14
+
+    9 expr: VAR ASSIGN . expr
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 25
+
+
+State 15
+
+   10 expr: FUN LPAREN . expr RPAREN
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 26
+
+
+State 16
+
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   15     | MINUS expr .
+   16     | expr . EXPON expr
+
+    PREFIX  shift, and go to state 18
+    EXPON   shift, and go to state 23
+
+    PREFIX    [reduce using rule 15 (expr)]
+    $default  reduce using rule 15 (expr)
+
+
+State 17
+
+    4 line: expr NEWLINE .
+
+    $default  reduce using rule 4 (line)
+
+
+State 18
+
+    8 expr: expr PREFIX .
+
+    $default  reduce using rule 8 (expr)
+
+
+State 19
+
+   12 expr: expr MINUS . expr
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 27
+
+
+State 20
+
+   11 expr: expr PLUS . expr
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 28
+
+
+State 21
+
+   13 expr: expr MULT . expr
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 29
+
+
+State 22
+
+   14 expr: expr DIV . expr
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 30
+
+
+State 23
+
+   16 expr: expr EXPON . expr
+
+    LPAREN  shift, and go to state 5
+    NUM     shift, and go to state 6
+    VAR     shift, and go to state 7
+    FUN     shift, and go to state 8
+    MINUS   shift, and go to state 9
+
+    expr  go to state 31
+
+
+State 24
+
+   17 expr: LPAREN expr RPAREN .
+
+    $default  reduce using rule 17 (expr)
+
+
+State 25
+
+    8 expr: expr . PREFIX
+    9     | VAR ASSIGN expr .
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+
+    PREFIX  shift, and go to state 18
+    MINUS   shift, and go to state 19
+    PLUS    shift, and go to state 20
+    MULT    shift, and go to state 21
+    DIV     shift, and go to state 22
+    EXPON   shift, and go to state 23
+
+    PREFIX    [reduce using rule 9 (expr)]
+    $default  reduce using rule 9 (expr)
+
+
+State 26
+
+    8 expr: expr . PREFIX
+   10     | FUN LPAREN expr . RPAREN
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+
+    RPAREN  shift, and go to state 32
+    PREFIX  shift, and go to state 18
+    MINUS   shift, and go to state 19
+    PLUS    shift, and go to state 20
+    MULT    shift, and go to state 21
+    DIV     shift, and go to state 22
+    EXPON   shift, and go to state 23
+
+
+State 27
+
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   12     | expr MINUS expr .
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+
+    PREFIX  shift, and go to state 18
+    MULT    shift, and go to state 21
+    DIV     shift, and go to state 22
+    EXPON   shift, and go to state 23
+
+    PREFIX    [reduce using rule 12 (expr)]
+    $default  reduce using rule 12 (expr)
+
+
+State 28
+
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   11     | expr PLUS expr .
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+
+    PREFIX  shift, and go to state 18
+    MULT    shift, and go to state 21
+    DIV     shift, and go to state 22
+    EXPON   shift, and go to state 23
+
+    PREFIX    [reduce using rule 11 (expr)]
+    $default  reduce using rule 11 (expr)
+
+
+State 29
+
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   13     | expr MULT expr .
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+
+    PREFIX  shift, and go to state 18
+    EXPON   shift, and go to state 23
+
+    PREFIX    [reduce using rule 13 (expr)]
+    $default  reduce using rule 13 (expr)
+
+
+State 30
+
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   14     | expr DIV expr .
+   16     | expr . EXPON expr
+
+    PREFIX  shift, and go to state 18
+    EXPON   shift, and go to state 23
+
+    PREFIX    [reduce using rule 14 (expr)]
+    $default  reduce using rule 14 (expr)
+
+
+State 31
+
+    8 expr: expr . PREFIX
+   11     | expr . PLUS expr
+   12     | expr . MINUS expr
+   13     | expr . MULT expr
+   14     | expr . DIV expr
+   16     | expr . EXPON expr
+   16     | expr EXPON expr .
+
+    PREFIX  shift, and go to state 18
+    EXPON   shift, and go to state 23
+
+    PREFIX    [reduce using rule 16 (expr)]
+    $default  reduce using rule 16 (expr)
+
+
+State 32
+
+   10 expr: FUN LPAREN expr RPAREN .
+
+    $default  reduce using rule 10 (expr)
